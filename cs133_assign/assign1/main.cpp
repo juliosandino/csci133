@@ -1,3 +1,16 @@
+/*
+  main.cpp
+  This is the file where the main function runs
+
+  Julio Sandino
+  02/10/17
+
+  So far, whats been implemented is a class of a register which
+  holds a key and a value. Also the program recognizes the commands
+  but the commands have not been implemented. To be honest I thought
+  I'd have til 11:59 pm to submit the work, but boy was I wrong.
+*/
+
 #include <sstream>
 #include <iostream>
 #include <string>
@@ -65,6 +78,14 @@ int main() {
 	return 0;
 }
 
+/*
+  This is the function you implemented in class.
+  I thought that it was pretty good so I used it
+  on this assigment.
+  
+  Source: Class
+  Author: Professor Clifton
+*/
 vector<string> split_words(string input) {
 	vector<string> words;
 	string current_word;
