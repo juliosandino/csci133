@@ -23,6 +23,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <algorithm>
 
 #include "Register.h"
 using std::vector;
@@ -55,8 +56,6 @@ int main() {
 	Registry.push_back( new Register("b", 0));
 	Registry.push_back( new Register("c", 0));
 	Registry.push_back( new Register("d", 0));
-
-	Registry[0]->set_value(5);
 
 	string line;
 	vector<string> words;
@@ -371,6 +370,8 @@ void cmp (string k1, string k2, string k3) {
 
  Returns true if the string constains only numbers
  Credit: I got this function from stackoverflow
+
+ Depends: <Algorithm>
  }
  */
 bool is_number (const string& s){
