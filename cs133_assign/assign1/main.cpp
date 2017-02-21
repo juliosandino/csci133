@@ -24,6 +24,7 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <stdexcept>
 
 #include "Register.h"
 using std::vector;
@@ -276,18 +277,16 @@ void store (string key, int val) {
 void add (string k1, string k2, string k3) {
 	int value1;
 	int value2;
-	int int_key1;
-	int int_key2;
-	Register* register_key1;
-	Register* register_key2;
+	Register* key1;
+	Register* key2;
 	Register* key3 = find_register(k3);
 
 	try {
 		value1 = std::stoi(k1);
 	} catch (std::invalid_argument e) {
-		register_key1 = find_register(k1);
-		if (register_key1) {
-			value1 = register_key1->get_value();
+		key1 = find_register(k1);
+		if (key1) {
+			value1 = key1->get_value();
 		} else {
 			cout << k1 << " is not a valid registry\n";
 			return;
@@ -297,9 +296,9 @@ void add (string k1, string k2, string k3) {
 	try {
 		value2 = std::stoi(k2);
 	} catch (std::invalid_argument e) {
-		register_key2 = find_register(k2);
-		if (register_key2) {
-			value2 = register_key2->get_value();
+		key2 = find_register(k2);
+		if (key2) {
+			value2 = key2->get_value();
 		} else {
 			cout << k2 << " is not a valid registry\n";
 			return;
@@ -329,18 +328,16 @@ void add (string k1, string k2, string k3) {
 void sub (string k1, string k2, string k3) {	
 	int value1;
 	int value2;
-	int int_key1;
-	int int_key2;
-	Register* register_key1;
-	Register* register_key2;
+	Register* key1;
+	Register* key2;
 	Register* key3 = find_register(k3);
 
 	try {
 		value1 = std::stoi(k1);
 	} catch (std::invalid_argument e) {
-		register_key1 = find_register(k1);
-		if (register_key1) {
-			value1 = register_key1->get_value();
+		key1 = find_register(k1);
+		if (key1) {
+			value1 = key1->get_value();
 		} else {
 			cout << k1 << " is not a valid registry\n";
 			return;
@@ -350,9 +347,9 @@ void sub (string k1, string k2, string k3) {
 	try {
 		value2 = std::stoi(k2);
 	} catch (std::invalid_argument e) {
-		register_key2 = find_register(k2);
-		if (register_key2) {
-			value2 = register_key2->get_value();
+		key2 = find_register(k2);
+		if (key2) {
+			value2 = key2->get_value();
 		} else {
 			cout << k2 << " is not a valid registry\n";
 			return;
@@ -382,18 +379,16 @@ void sub (string k1, string k2, string k3) {
 void mul (string k1, string k2, string k3) {
 	int value1;
 	int value2;
-	int int_key1;
-	int int_key2;
-	Register* register_key1;
-	Register* register_key2;
+	Register* key1;
+	Register* key2;
 	Register* key3 = find_register(k3);
 
 	try {
 		value1 = std::stoi(k1);
 	} catch (std::invalid_argument e) {
-		register_key1 = find_register(k1);
-		if (register_key1) {
-			value1 = register_key1->get_value();
+		key1 = find_register(k1);
+		if (key1) {
+			value1 = key1->get_value();
 		} else {
 			cout << k1 << " is not a valid registry\n";
 			return;
@@ -403,9 +398,9 @@ void mul (string k1, string k2, string k3) {
 	try {
 		value2 = std::stoi(k2);
 	} catch (std::invalid_argument e) {
-		register_key2 = find_register(k2);
-		if (register_key2) {
-			value2 = register_key2->get_value();
+		key2 = find_register(k2);
+		if (key2) {
+			value2 = key2->get_value();
 		} else {
 			cout << k2 << " is not a valid registry\n";
 			return;
