@@ -1,13 +1,18 @@
-#pragma once
 /*
   dlist.h
   Doubly-linked lists of ints
  */
-#include <ostream>
+#include <iostream>
 
 class dlist {
   public:
-    dlist() { }
+    dlist() { 
+		_head->next = _tail;
+		_tail->prev = _head;
+
+		_head->prev = nullptr;
+		_tail->next = nullptr;
+	};
 
     struct node {
         int value;
@@ -21,7 +26,7 @@ class dlist {
     // **** Implement ALL the following methods ****
 
     // Returns the node at a particular index (0 is the head).
-    node* at(int);
+    node* at(int index);
 
     // Insert a new value, after an existing one
     void insert(node *previous, int value);
@@ -42,14 +47,16 @@ class dlist {
     void pop_back();
 
     // Get the size of the list
-    int size();
+    int getSize();
 
     // Returns true if the list is empty (size == 0)
     bool empty();
+	
 
   private:
-    node* _head = nullptr;
-    node* _tail = nullptr;
+    node* _head = new node;
+    node* _tail = new node;
+	int size = 0;
 };
 
 // **** Implement ALL the following functions ****
