@@ -38,6 +38,8 @@ void add (string k1, string k2, string k3);
 void sub (string k1, string k2, string k3);
 void mul (string k1, string k2, string k3);
 void cmp (string k1, string k2, string k3);
+int string_to_int(string s);
+Register* find_register(string key);
 
 /*
 Register* a ("a", 0);
@@ -78,6 +80,9 @@ int main() {
 				}
 				
 			} else if (command == "store") {
+
+				Register* reg;
+				int value;
 				
 				if (words.size() > 2) {
 					try {
@@ -89,15 +94,19 @@ int main() {
 					 if (neg)
 						 val = val.substr(1, val.length());
 
-					 if (!is_number(val))
-						 throw val;
-				
-					 int value;
+					 if (!is_number(val)) {
+						reg = find_register(val);
+						if (reg == nullptr) {
+							throw val;
+						}
 
-					 if (!neg)
-						value = std::stoi(val);
-					 else
-						value = 0 - std::stoi(val);
+						value = reg->get_value();
+					 } else {
+						 if (!neg)
+							value = std::stoi(val);
+						 else
+							value = 0 - std::stoi(val);
+					 }
 					 
 					 store (key, value);
 					} catch (string e) {
@@ -194,8 +203,7 @@ vector<string> split_words(string input) {
 
  Returns: a pointer to the Registry
 
- Assumes: Global Variable Registry
-
+ Assumes: Global Variable Registry 
  Ensures: Registry will still remain unchanged and so will "key"
  */
 Register* find_register(string key) {
@@ -266,12 +274,40 @@ void store (string key, int val) {
  Ensures: k1 and k2 will not be changed. k3's value will change
  */
 void add (string k1, string k2, string k3) {
-	Register* key1 = find_register(k1);
-	Register* key2 = find_register(k2);
+	int value1;
+	int value2;
+	int int_key1;
+	int int_key2;
+	Register* register_key1;
+	Register* register_key2;
 	Register* key3 = find_register(k3);
 
-	if (key1 && key2 && key3) {
-		int sum = key1->get_value() + key2->get_value();
+	try {
+		value1 = std::stoi(k1);
+	} catch (std::invalid_argument e) {
+		register_key1 = find_register(k1);
+		if (register_key1) {
+			value1 = register_key1->get_value();
+		} else {
+			cout << k1 << " is not a valid registry\n";
+			return;
+		}
+	}
+
+	try {
+		value2 = std::stoi(k2);
+	} catch (std::invalid_argument e) {
+		register_key2 = find_register(k2);
+		if (register_key2) {
+			value2 = register_key2->get_value();
+		} else {
+			cout << k2 << " is not a valid registry\n";
+			return;
+		}
+	}
+
+	if (value1 && value2 && key3) {
+		int sum = value1 + value2;
 		key3->set_value(sum);
 	} else {
 		cout << "one of the registries does not exist\n";
@@ -290,14 +326,42 @@ void add (string k1, string k2, string k3) {
 
  Ensures: k1 and k2 will not be changed. k3's value will change
  */
-void sub (string k1, string k2, string k3) {
-	Register* key1 = find_register(k1);
-	Register* key2 = find_register(k2);
+void sub (string k1, string k2, string k3) {	
+	int value1;
+	int value2;
+	int int_key1;
+	int int_key2;
+	Register* register_key1;
+	Register* register_key2;
 	Register* key3 = find_register(k3);
 
-	if (key1 && key2 && key3) {
-		int sub = key1->get_value() - key2->get_value();
-		key3->set_value(sub);
+	try {
+		value1 = std::stoi(k1);
+	} catch (std::invalid_argument e) {
+		register_key1 = find_register(k1);
+		if (register_key1) {
+			value1 = register_key1->get_value();
+		} else {
+			cout << k1 << " is not a valid registry\n";
+			return;
+		}
+	}
+
+	try {
+		value2 = std::stoi(k2);
+	} catch (std::invalid_argument e) {
+		register_key2 = find_register(k2);
+		if (register_key2) {
+			value2 = register_key2->get_value();
+		} else {
+			cout << k2 << " is not a valid registry\n";
+			return;
+		}
+	}
+
+	if (value1 && value2 && key3) {
+		int sum = value1 - value2;
+		key3->set_value(sum);
 	} else {
 		cout << "one of the registries does not exist\n";
 	}
@@ -316,13 +380,41 @@ void sub (string k1, string k2, string k3) {
  Ensures: k1 and k2 will not be changed. k3's value will change
  */
 void mul (string k1, string k2, string k3) {
-	Register* key1 = find_register(k1);
-	Register* key2 = find_register(k2);
+	int value1;
+	int value2;
+	int int_key1;
+	int int_key2;
+	Register* register_key1;
+	Register* register_key2;
 	Register* key3 = find_register(k3);
 
-	if (key1 && key2 && key3) {
-		int mul = key1->get_value() * key2->get_value();
-		key3->set_value(mul);
+	try {
+		value1 = std::stoi(k1);
+	} catch (std::invalid_argument e) {
+		register_key1 = find_register(k1);
+		if (register_key1) {
+			value1 = register_key1->get_value();
+		} else {
+			cout << k1 << " is not a valid registry\n";
+			return;
+		}
+	}
+
+	try {
+		value2 = std::stoi(k2);
+	} catch (std::invalid_argument e) {
+		register_key2 = find_register(k2);
+		if (register_key2) {
+			value2 = register_key2->get_value();
+		} else {
+			cout << k2 << " is not a valid registry\n";
+			return;
+		}
+	}
+
+	if (value1 && value2 && key3) {
+		int sum = value1 * value2;
+		key3->set_value(sum);
 	} else {
 		cout << "one of the registries does not exist\n";
 	}
@@ -377,4 +469,23 @@ void cmp (string k1, string k2, string k3) {
 bool is_number (const string& s){
 	return !s.empty() && std::find_if(s.begin(),
 			s.end(), [](char c) { return !std::isdigit(c);}) == s.end();
+}
+
+int string_to_int(string s) {
+	bool neg = s.at(0) == '-';
+
+	if (neg)
+		s = s.substr(1, s.length());
+
+	if (!is_number(s))
+		throw s;
+
+	int value;
+
+	if (!neg)
+		value = std::stoi(s);
+	else
+		value = 0 - std::stoi(s);
+
+	return value;
 }
