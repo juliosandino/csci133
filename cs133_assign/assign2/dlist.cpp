@@ -86,16 +86,15 @@ void dlist::pop_front() {
  }
 
 std::ostream& operator<< (std::ostream& out, dlist& l) {
-	out << "head";
-	node* c = l.head();
+	node* c = l.head()->next;
 
-	while (c->next != l.tail()) {
-		out << " -> ";
-		out << c->next->value;
+	while (c != l.tail()) {
+		out << c->value;
+		out << ",";
 		c = c->next;
 	}
 
-	out << " -> tail\n";
+	out << "\n";
 	
 	return out;
 }
