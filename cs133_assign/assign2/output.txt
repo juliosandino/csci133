@@ -1,0 +1,52 @@
+--previous pointer check--
+Success
+Success
+Success
+Success
+3,6,5,
+
+--next pointer check--
+Success
+Success
+Success
+
+--deletion check--
+Success (Error)
+Success
+Success
+3,6,
+
+--push_back check--
+Success
+Success
+3,6,2,
+
+--pop_front check--
+Success
+Success
+Success
+Success (Error)
+
+
+--pop_back--
+Success (Error)
+Success
+
+--list output check--
+5,
+1,5,4,3,
+
+--list comparison check--
+1,5,4,3,
+Success (Same)
+1,5,4,5,
+Success (Not Same)
+
+--list concatenation check--
+adding l and b
+this is the "concat" list
+1,5,4,3,1,5,4,5,
+
+--reverse check--
+reversed "concat"
+5,4,5,1,3,4,5,1,

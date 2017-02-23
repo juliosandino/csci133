@@ -22,6 +22,7 @@ int main() {
 
 	if (l.tail()->prev == l.at(3)) {		
 		cout << "Success\n";
+		cout << l;
 	}
 
 	cout << "\n";
@@ -52,6 +53,7 @@ int main() {
 
 	if (l.tail()->prev == l.at(2)){
 		cout << "Success\n";
+		cout << l;
 	}
 
 	cout << "\n";
@@ -66,6 +68,7 @@ int main() {
 
 	if (l.at(2)->next->value == 2) {
 		cout << "Success\n";
+		cout << l;
 	}
 
 	cout << "\n";
@@ -91,6 +94,8 @@ int main() {
 
 	l.pop_front();
 	l.pop_front();
+
+	cout << l;
 
 	cout << "\n";
 
@@ -156,5 +161,9 @@ int main() {
 	cout << "reversed \"concat\"\n";
 	dlist rev = reverse(concat);
 	cout << rev;
+
+	//Test check
+	cout << "\n\n";
+	cout << "All the tests checked out! The double linked list is fully functional\n";
 	return 0;
 }
