@@ -9,6 +9,9 @@
 		Implented all the functions needed.
 		Used a vector that holds Register object pointers.
 		Added error control.
+	Mar-1 resubmission:
+		Added functionality so that the operations can be
+		used with integers as well as registries.
 
 
   So far, whats been implemented is a class of a register which
