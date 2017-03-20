@@ -43,7 +43,7 @@ int main () {
 		cout << std::endl;
 	}
 
-	int arr_in[] = {5, 1, 7};
+	int arr_in[] = {5, 1, 3};
 	int arr_not[] = {6, 5, 8};
 
 	if (is_subset(arr_in, 3, arr, 6))
