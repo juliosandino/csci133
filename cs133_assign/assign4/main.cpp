@@ -9,13 +9,13 @@ using std::cout;
 using std::cin;
 
 int main() {
-	tree* test = new tree;
-	test->insert(test->root(), 5);
-	test->insert(test->root(), 8);
-	test->insert(test->root(), 4);
-	test->insert(test->root(), 6);
+	tree test;
+	test.insert(test.root(), 5);
+	test.insert(test.root(), 8);
+	test.insert(test.root(), 4);
+	test.insert(test.root(), 6);
 
-	node* test_node = test->find(test->root(), 8);
+	node* test_node = test.find(test.root(), 8);
 	std::cout << test_node << std::endl;
 	
 	return 0;

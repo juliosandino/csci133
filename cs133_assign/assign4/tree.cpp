@@ -9,9 +9,9 @@
 using std::string;
 typedef tree::node node;
 
-void tree::insert(node* root, int value) {
+void tree::insert(node*& root, int value) {
 	if (root == nullptr)
-		_root = new node {value, nullptr, nullptr, root, 1}; //if tree is empty
+		_root = new  node{value, nullptr, nullptr, nullptr, 1}; //if tree is empty
 	else {
 		if (value > root->key) { //if value is greater than the key
 			if (root->right == nullptr) //
@@ -28,7 +28,7 @@ void tree::insert(node* root, int value) {
 	}
 }
 
-void tree::remove(node* root, int value) {
+void tree::remove(node*& root, int value) {
 	node* node_removed = tree::find(root, value);
 
 	if (node_removed->right == nullptr && node_removed->left == nullptr)
@@ -55,6 +55,7 @@ void tree::print_tree(node* root) {
 		std::cout << root;
 		print_tree(root->right);
 		print_tree(root->left);
+	}
 }
 
 node* tree::merge(node* t1, node* t2) {
