@@ -22,8 +22,9 @@ class tree {
 			}
 		}
 		void insert(node* root, int value);
-		void remove(node*& root, int value);
-		void print(std::ostream& out, node* root);
+		void remove(node* root, int value);
+		void print_tree(node* root);
+		friend std::ostream& operator <<(std::ostream& out, node* root);
 		node* merge(node* t1, node* t2);
 		bool check(node* root);
 		node* root() { return _root; }

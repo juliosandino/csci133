@@ -15,13 +15,8 @@ int main() {
 	test->insert(test->root(), 4);
 	test->insert(test->root(), 6);
 
-	try {
-		node* test_node = test->find(test->root(), 8);
-		if (!test_node)
-			throw test_node;
-		std::cout << test_node->key << std::endl;
-	} catch (node* e) {
-		cout << "twas a nullptr" << std::endl;
-	}
+	node* test_node = test->find(test->root(), 8);
+	std::cout << test_node << std::endl;
+	
 	return 0;
 }
