@@ -29,7 +29,7 @@ void tree::insert(node*& root, int value) {
 }
 
 void tree::remove(node*& root, int value) {
-	node* node_removed = tree::find(root, value);
+	node*& node_removed = tree::find(root, value);
 
 	if (node_removed->right == nullptr && node_removed->left == nullptr)
 		delete node_removed;
@@ -53,8 +53,17 @@ std::ostream& operator << (std::ostream& out, node* root) {
 void tree::print_tree(node* root) {
 	if (root) {
 		std::cout << root;
-		print_tree(root->right);
-		print_tree(root->left);
+		if (root->right && root->left) {
+			print_tree(root->left);
+			print_tree(root->right);
+		}
+
+		else if (root->right)
+			print_tree(root->right);
+		else if (root->left)
+			print_tree(root->left);
+		else
+			return;
 	}
 }
 

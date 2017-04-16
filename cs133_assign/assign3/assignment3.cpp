@@ -1,7 +1,34 @@
-#include <iostream>
+#include <iostream> 
 #include <string>
 #include <array>
 
+/*
+--Inductive Proof sum_evens--
+
+best case: n = 0 or n = 1
+	it will return 0 because neither 0 or 1 are even
+
+Inductive case:
+
+	Hypothesis:
+		sum_evens(n') = n' + (n' - 2) + (n' - 4) + ... + 2
+		for all n' < n
+
+		let n' = n - 2
+
+	Prove sum_evens(n) =  n + (n - 2) + (n - 4) + (n - 6) + ... + (2)
+
+	--when n is even--
+	n + sum_evens(n - 2) - n = n + (n - 2) + (n - 4) + (n - 6) + ... + 2 - n
+	sum_evens(n - 2) = (n - 2) + (n - 4) + (n - 6) + ... + 2
+	sum_evens(n') = n' + (n' - 2) + (n' - 4) + ... + 2
+
+	--when n is odd--
+	n - 1 + sum_evens(n - 3) - (n - 1) = (n - 1) + (n - 3) + (n - 5) + ... + 2 - (n - 1)
+	sum_evens(n - 3) = (n - 3) + (n - 5) + ... + 2
+	sum_evens(n' - 1) = (n' - 1) + (n' - 3) + ... + 2
+
+*/
 int sum_evens(unsigned int n) {
 	if (n == 1 || n == 0) // base case
 		return 0;
@@ -12,13 +39,54 @@ int sum_evens(unsigned int n) {
 		return n - 1 + sum_evens(n - 3);
 }
 
+/*
+--Inductive Proof sum_evens--
+
+best case: b = 0
+	0 = 0
+
+Inductive Case:
+
+	Hypothesis:
+		multiply(a, b') = a * b'
+		for all b' < b
+
+		let b' = b - 1
+	
+	Prove multiply(a, b) = a * b
+
+	a + multiply(a, b - 1) - a	= a * b - a
+	multiply(a, b - 1) = a * (b - 1)
+	multiply(a, b') = a * b'
+
+*/
 int multiply(unsigned int a, unsigned int b) {
 	if (b == 0)
 		return 0;
 
-	return a + multiply(a, b -1);
+	return a + multiply(a, b - 1);
 }
+/*
+--Inductive Proof smallest--
 
+This proof tests that the function recursively checks every object
+in the array, assuming that the comparison is handled elsewhere.
+
+best case: length = 1
+	it will return the only number in the array
+
+Inductive case:
+	
+	Hypothesis:
+		when length = 1, the array will have been fully checked.
+	
+	Prove smallest(int* arr, length) checks every element in array
+
+	every time the function gets called it recursively calls itself with
+	length - 1, until length = 1.
+	
+ 
+ */
 int smallest(int* arr, int length) {
 	if (length == 1)
 		return *arr;
@@ -28,6 +96,8 @@ int smallest(int* arr, int length) {
 
 	return current < rest ? current : rest;
 }
+
+
 
 bool is_palindrome(std::string s) {
 	if (s.length() == 0)
