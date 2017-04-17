@@ -6,6 +6,7 @@ Created by Julio Sandino
 #include <vector>
 #include <cstdint>
 #include "hash.cpp"
+#include <cmath>
 
 using std::vector;
 using std::cout;
