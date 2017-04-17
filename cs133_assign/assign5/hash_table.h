@@ -7,8 +7,8 @@ using std::vector;
 class hash_table{
 	public:
 		void insert(string k, int v);
-		int& find(string k);
+		int find(string k);
 
 	private:
-		std::vector<int> table;
+		std::vector<string> table;
 };
