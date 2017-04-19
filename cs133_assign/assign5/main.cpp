@@ -53,12 +53,12 @@ void str_length_tester() {
 		while (getline(file, line))
 			hashes[hash_maker(str_length(line))]++;
 
-	for (int i = 0; i < MOD; i++)
-		if (hashes[i] > 0)
-			cout << i << ": " << hashes[i] << "\n";
-	
 	float expected = 100000 / 65536;
 	float c2;
+
+	for (int i = 0; i < MOD; i++){
+		c2 += pow(expected - hashes[i], 2) / expected;
+	}
 
 	boost::math::chi_squared c2d(65535.0);
 	float p = boost::math::cdf(c2d, c2);
