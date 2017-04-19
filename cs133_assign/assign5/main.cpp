@@ -22,6 +22,7 @@ void first_char_tester();
 int main() {
 
 	str_length_tester();
+	first_char_tester();
 	
 	return 0;
 }
@@ -94,5 +95,5 @@ void first_char_tester() {
 	float p = boost::math::cdf(c2d, c2);
 	
 
-	cout << "String length: p = " << p << "\n";
+	cout << "First char: p = " << p << "\n";
 }
