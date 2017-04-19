@@ -10,15 +10,16 @@ using std::string;
 using std::cout;
 
 static int MOD = 65536;
+static double A = 0.6180339887;
 
 void reader();
 uint16_t str_length(string str);
-int hash_maker(uint16_t k);
-void tester();
+uint16_t hash_maker(uint16_t k);
+void str_length_tester();
 
 int main() {
 
-	tester();
+	str_length_tester();
 	
 	return 0;
 }
@@ -34,15 +35,15 @@ void reader() {
 }
 
 uint16_t str_length(string str) {
-	return str.length() % MOD;
-}
-
-int hash_maker(uint16_t k) {
-	double A = 0.6180339887;
+	uint16_t k = str.length() % MOD;
 	return MOD * fmod(k*A, 1);
 }
 
-void tester() {
+uint16_t hash_maker(uint16_t k) {
+	return MOD * fmod(k*A, 1);	
+}
+
+void str_length_tester() {
 	std::vector<int> hashes (65536);
 	std::fstream file;
 	string line;
@@ -52,9 +53,9 @@ void tester() {
 		while (getline(file, line))
 			hashes[hash_maker(str_length(line))]++;
 
-//	for (int i = 0; i < MOD; i++)
-//		if (hashes[i] > 0)
-//			cout << i << ": " << hashes[i] << "\n";
+	for (int i = 0; i < MOD; i++)
+		if (hashes[i] > 0)
+			cout << i << ": " << hashes[i] << "\n";
 	
 	float expected = 100000 / 65536;
 	float c2;
