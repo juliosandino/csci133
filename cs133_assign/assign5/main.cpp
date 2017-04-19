@@ -4,7 +4,7 @@
 #include <cstdint>
 #include <math.h>
 #include <fstream>
-#include "boost_1_63_0/boost/math/distributions/chi_squared.hpp"
+#include "boost/math/distributions/chi_squared.hpp"
 
 using std::string;
 using std::cout;
@@ -63,6 +63,9 @@ void tester() {
 		c2 += pow(expected - hashes[i], 2) / expected;
 	}
 	
-	double c2d;
+	boost::math::chi_squared c2d(65535.0);
+	float p = boost::math::cdf(c2d, c2);
+	
 
+	cout << "String length: p = " << p << "\n";
 }
