@@ -15,14 +15,17 @@ static double A = 0.6180339887;
 void reader();
 uint16_t str_length(string str);
 uint16_t first_char(string str);
+uint16_t checksum(string str);
 uint16_t hash_maker(uint16_t k);
 void str_length_tester();
 void first_char_tester();
+void checksum_tester();
 
 int main() {
 
 	str_length_tester();
 	first_char_tester();
+	checksum_tester();
 	
 	return 0;
 }
@@ -44,6 +47,14 @@ uint16_t str_length(string str) {
 
 uint16_t first_char(string str) {
 	return (int) str.at(0);
+}
+
+uint16_t checksum(string str) {
+	uint16_t sum = 0;
+		for (char c: str)
+			sum += (int)c;
+
+	return sum;
 }
 
 uint16_t hash_maker(uint16_t k) {
@@ -96,4 +107,29 @@ void first_char_tester() {
 	
 
 	cout << "First char: p = " << p << "\n";
+}
+
+
+void checksum_tester() {
+	std::vector<int> hashes (65536);
+	std::fstream file;
+	string line;
+	file.open("words.txt");
+
+	if (file.is_open())
+		while (getline(file, line))
+			hashes[hash_maker(checksum(line))]++;
+
+	float expected = 100000 / 65536;
+	float c2;
+
+	for (int i = 0; i < MOD; i++){
+		c2 += pow(expected - hashes[i], 2) / expected;
+	}
+
+	boost::math::chi_squared c2d(65535.0);
+	float p = boost::math::cdf(c2d, c2);
+	
+
+	cout << "Checksum: p = " << p << "\n";
 }
