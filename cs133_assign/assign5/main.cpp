@@ -40,5 +40,5 @@ void tester(hash* function) {
 	boost::math::chi_squared c2d(65535.0);
 	float p = boost::math::cdf(c2d, c2);
 	
-	cout << function->description() <<": p = " << c2 << "\n";
+	cout << function->description() <<": p = " << p << "\n";
 }
