@@ -10,14 +10,21 @@ class hash {
 		int MOD = 65535;
 		float A = 0.6180339887;
 		virtual uint16_t hasher(string str) = 0;
+		virtual string description() = 0;
 };
 
 class str_length : public hash {
 	public:
 		uint16_t hasher(string str) {	
 			uint16_t k = str.length() % MOD;
-			return MOD * fmod(k*A, 1);
+			return k;
 		}
+
+		string description() {
+			return "String length";
+		}
+
+	
 };
 
 class first_char : public hash {
@@ -25,6 +32,10 @@ class first_char : public hash {
 		uint16_t hasher(string str) {
 			uint16_t k = (int) str.at(0);
 			return MOD * fmod(k*A, 1);
+		}
+
+		string description() {
+			return "First char";
 		}
 };
 
@@ -35,7 +46,11 @@ class checksum : public hash {
 				for (char c: str)
 					sum += (int)c;
 
-			return MOD * fmod(sum * A, 1);
+			return abs(sum % MOD);
+		}
+
+		string description() {
+			return "Checksum";
 		}
 };
 
@@ -48,5 +63,25 @@ class multiplicative : public hash {
 				hash = fmod(256* hash + A * c, 1);
 
 			return hash;
+		}
+
+		string description() {
+			return "Multiplicative";
+		}
+};
+
+class remainder : public hash {
+	public:
+		uint16_t hasher(string str) {
+			uint16_t sum = 0;
+			for (int i = str.size() - 1; i >= 0; i--){
+				sum = (sum * 256 + str.at(i)) % 65413;
+			}
+
+			return sum;
+		}
+
+		string description() {
+			return "Remainder";
 		}
 };
