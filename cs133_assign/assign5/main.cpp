@@ -13,7 +13,8 @@ int main() {
 								new str_length(),
 								new first_char(),
 								new checksum(),
-								new class remainder()};
+								new class remainder(),
+								new my_hash()};
 	for (hash* hash : hashes)
 		tester(hash);
 	

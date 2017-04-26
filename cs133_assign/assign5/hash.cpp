@@ -85,3 +85,25 @@ class remainder : public hash {
 			return "Remainder";
 		}
 };
+
+class my_hash : public hash {
+	public:
+		uint16_t hasher(string str) {
+			float pi = .14159265359;
+			float ran1 = .9182734756;
+			float ran2 = .1325346575;
+			uint16_t sum = 0;
+			for (int i = 0; i < str.size(); i++) {
+				if ( i % 2 == 0)
+					sum = fmod(sum + str.at(i) * pi, 1);
+				if (i % 2 == 1)
+					sum = fmod(sum + str.at(i) * ran1 * ran2, 1);
+			}
+
+			return sum * MOD;
+		}
+
+		string description() {
+			return "Custom Hash";
+		}
+};
