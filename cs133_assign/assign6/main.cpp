@@ -1,114 +1,58 @@
-#include <iostream>
+#include "pset.cpp"
 #include <vector>
 #include <string>
 
-using std::cout;
 using std::cin;
 using std::vector;
 using std::string;
 using it = vector<string>::iterator;
 
-vector<string> lex(string s);
 
-struct pset {
-	virtual void evaluate() = 0;
-};
-
-struct pset_num : public pset {
-	pset_num (int value) {
-		v = value;
-	}
-	
-	void evaluate() {
-		cout << v << ", ";
-	}
-
-	int v;
-};
-
-struct pset_range : public pset {
-	pset_range(int start, int end) {
-		s = start;
-		e = end;
-	}
-
-	void evaluate() {
-		for (int i = s; i <= e; i++) {
-			cout << i << ", ";
-		}
-	}
-
-	int s;
-	int e;
-};
-
-struct pset_r_odd : public pset {
-	pset_r_odd(int start, int end) {
-		s = start;
-		e = end;
-	}
-
-	void evaluate() {
-		for (int i = s; i <= e; i++) {
-			if (i % 2 == 1)
-				cout << i << ", ";
-		}
-	}
-
-	int s;
-	int e;
-};
-
-struct pset_r_even : public pset {
-	pset_r_even(int start, int end) {
-		s = start;
-		e = end;
-	}
-
-	void evaluate() {
-		for (int i = s; i <= e; i++) {
-			if (i % 2 == 0)
-				cout << i << ", ";
-		}
-	}
-
-	int s;
-	int e;
-};
-
+//checks to see if a string is a number
 bool is_num(string s) {
 	return (s.at(0) >= '0' && s.at(0) <= '9');
 }
 
+//checks to see if a string is an operator "to" or "-" in this case
 bool is_op(string s) {
 	return (s == "to" || s == "-");
 }
 
+//checks to see if the string is a qualifier. "even" or "odd" in this case
 bool is_qualifier(string s) {
 	return (s == "even" || s == "odd");
 }
 
+//function declarations
 bool is_expr(it start, it finish);
 void parse_pset(it start, it finish);
+vector<string> lex(string s);
+
+//This is the global cariable where the regular expressions will get stored
+//in the main loop, this expressions will be "evaluated" and printed out to
+//the console
 vector <pset*> ranges;
 
 int main() {
 	string input;
 
 	while (true) {
-		vector<char> chararacters;
+		//where the tokens will be stored after lexical analysis
 		vector<string> tokens;
+
 		cout << "> ";
 		std::getline(cin, input);
-		//for (char c : input)
-		//	chararacters.push_back(c);
-		
+	
+		//storing the input as tokens
 		tokens = lex(input);
+
+		//printing out the tokens to the user
 		for (int i = 0; i < tokens.size(); i++)
 			cout << "\"" << tokens[i] << "\", ";
 
 		cout << std::endl;
-
+		
+		//checking to see if all the tokens in "tokens" vector are parseable
 		bool valid = is_expr(tokens.begin(), tokens.end() -1);
 
 		if (valid) {
@@ -128,6 +72,10 @@ int main() {
 	}
 }
 
+/*
+This function is a state machine that takes in an input string and divides
+the string into tokens : space, numbers, words, operators.
+*/
 vector<string> lex(string s) {
 	const int SPACE = 0;
 	const int NUM = 1;
@@ -190,20 +138,37 @@ vector<string> lex(string s) {
 		return words;
 }
 
+/*
+This bad boy over here is the parser.
+Due to the linear nature of parsing pages, I can go through the tokens
+without any regard of them affecting the tokens that come later.
+for example, in "1,2,3,4-8" 1,2,3 will not affect 4-8, so we can parse those
+and not worry about them later.
+
+Assumes: Global Vector called ranges.
+Modifies the "ranges" vector by adding in the tokens as regular expressions
+
+*/
 void parse_pset(it start, it finish) {
 
 	if (start > finish)
+		//if input is empty
 		return;
 	else if (start == finish) {
+		//if input is just one token. It has to be a number
 		if(is_num(*start))
 			ranges.push_back(new pset_num{ stoi(*start) });
 	} else {
+
+			//if the tokens follow the grammar <number><operator><number><modifier>
 			if (is_num(*start) && is_op(*(start+1)) &&
 				is_num(*(start+2)) && is_qualifier(*(start+3))) {
+
 				if (*(start+3) == "odd") {
 					ranges.push_back(new pset_r_odd{stoi(*start),
 							stoi(*(start+2))});
-				
+					
+					//"recursive" call in order to keep looking through the input vector
 					parse_pset(start+4, finish);
 				}
 				else if (*(start+3) == "even") {
@@ -214,14 +179,16 @@ void parse_pset(it start, it finish) {
 				}
 			}	
 			
+			//if the tokens follow the grammar <number><operator><number>
 			else if (is_num(*start) && is_op(*(start+1)) &&
 				is_num(*(start+2))) {
 				ranges.push_back(new pset_range{stoi(*start),stoi(*(start+2))});
 
 				parse_pset(start+3, finish);
 			}
-
-		   else if (is_num(*start)){
+			
+			//if the tokens follow the grammar <number><expression>+
+			else if (is_num(*start)){
 			ranges.push_back(new pset_num{ stoi(*start)});
 			
 			parse_pset(start+1, finish);
@@ -231,6 +198,10 @@ void parse_pset(it start, it finish) {
 	return;
 }
 
+/*
+ This function goes through the token vector and makes sure
+ all the tokens make valid expressions.
+*/
 bool is_expr(it start, it finish) {
 	if (start > finish)
 		return true;
