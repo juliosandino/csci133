@@ -42,7 +42,7 @@ int main() {
 
 		cout << "> ";
 		std::getline(cin, input);
-	
+
 		//storing the input as tokens
 		tokens = lex(input);
 
@@ -51,7 +51,7 @@ int main() {
 			cout << "\"" << tokens[i] << "\", ";
 
 		cout << std::endl;
-		
+
 		//checking to see if all the tokens in "tokens" vector are parseable
 		bool valid = is_expr(tokens.begin(), tokens.end() -1);
 
@@ -60,9 +60,9 @@ int main() {
 			parse_pset(tokens.begin(), tokens.end() -1);
 			for (pset* exp : ranges) {
 				exp->evaluate();
-			}	
+			}
 			ranges.clear();
-		
+
 		} else {
 			cout << "Invalid input" << std::endl;
 		}
@@ -96,9 +96,9 @@ vector<string> lex(string s) {
 				state = WORD;
 			else if (c == '-')
 				state = OP;
-		
+
 		word.push_back(c);
-		}	
+		}
 
 		else {
 			//Not in SPACE
@@ -126,7 +126,7 @@ vector<string> lex(string s) {
 				word.clear();
 				word.push_back(c);
 			}
-			
+
 			state = newstate;
 		}
 
@@ -167,7 +167,7 @@ void parse_pset(it start, it finish) {
 				if (*(start+3) == "odd") {
 					ranges.push_back(new pset_r_odd{stoi(*start),
 							stoi(*(start+2))});
-					
+
 					//"recursive" call in order to keep looking through the input vector
 					parse_pset(start+4, finish);
 				}
@@ -177,8 +177,8 @@ void parse_pset(it start, it finish) {
 
 					parse_pset(start+4, finish);
 				}
-			}	
-			
+			}
+
 			//if the tokens follow the grammar <number><operator><number>
 			else if (is_num(*start) && is_op(*(start+1)) &&
 				is_num(*(start+2))) {
@@ -186,11 +186,11 @@ void parse_pset(it start, it finish) {
 
 				parse_pset(start+3, finish);
 			}
-			
+
 			//if the tokens follow the grammar <number><expression>+
 			else if (is_num(*start)){
 			ranges.push_back(new pset_num{ stoi(*start)});
-			
+
 			parse_pset(start+1, finish);
 		}
 	}
@@ -221,7 +221,6 @@ bool is_expr(it start, it finish) {
 		} else if (is_num(*start)) {
 			return is_expr(start+1, finish);
 		}
-		
 	}
 
 	return false;

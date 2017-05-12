@@ -11,7 +11,7 @@ struct pset_num : public pset {
 	pset_num (int value) {
 		v = value;
 	}
-	
+
 	void evaluate() {
 		cout << v << ", ";
 	}
