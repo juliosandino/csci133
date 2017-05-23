@@ -1,3 +1,37 @@
+/*
+main.cpp
+this is where the registry part of the program runs
+
+Julio Sandino
+
+May-14 first submission
+May-17 resubmission:
+	Finished the registry commands in main() function
+	Fixed the distance algorithm in bfs() function
+	Added a throw in create_edge() function
+	Moved member function definitions outside of class adj_list
+	registry program catches all the throws of adj_list functinons
+	Added the registry in the comments
+*/
+
+/*
+Registry Commands:
+create 10 r
+arc 0 2 r
+arc 1 0 r
+arc 2 1 r
+arc 3 2 r
+arc 3 1 r
+arc 3 4 r
+arc 4 7 r
+arc 4 5 r
+biarc 5 6 r
+arc 7 3 r
+arc 8 7 r
+arc 8 9 r
+arc 9 7 r
+*/
+
 #include "graph.cpp"
 #include <sstream>
 using std::string;
@@ -33,22 +67,69 @@ int main() {
 				}
 			}
 			else if (command == "print") {
+					//checks if the graph exists
 				if (tokens.size() == 2 && graphs[tokens.at(1)]) {
 					string name = tokens.at(1);
 
 					graphs[name]->print();
 				} else {
-					cout << "Wrong amount of arguments" << std::endl;
+					cout << "Error. Graph doesn't exist or Invalid Arguments" << std::endl;
 				}
 			}
 			else if (command == "arc") {
-			//arc code
+				if (tokens.size() == 4) {
+					if (graphs[tokens.at(3)]) {
+						try {
+							int source = std::stoi(tokens.at(1));
+							int destination = std::stoi(tokens.at(2));
+
+							graphs[tokens.at(3)]->create_edge(source, destination);
+						} catch (std::exception e) {
+							cout << "Error. Invalid Arguments" << std::endl;
+						}
+					} else {
+						cout << "Error. Register doesn't exist" << std::endl;
+					}
+				} else {
+					cout << "Wrong amount of arguments" << std::endl;
+				}
 			}
 			else if (command == "biarc") {
-			//biarc code
+				if (tokens.size() == 4) {
+					if (graphs[tokens.at(3)]) {
+						try {
+							int source = std::stoi(tokens.at(1));
+							int destination = std::stoi(tokens.at(2));
+
+							graphs[tokens.at(3)]->create_edge(source, destination);
+							graphs[tokens.at(3)]->create_edge(destination, source);
+						} catch (std::exception e) {
+							cout << "Error. Invalid Arguments" << std::endl;
+						}
+					} else {
+						cout << "Error. Register doesn't exist" << std::endl;
+					}
+				} else {
+					cout << "Wrong amount of arguments" << std::endl;
+				}
 			}
 			else if (command == "bfs") {
-			//breadth-first command
+				if (tokens.size() == 4) {
+					if (graphs[tokens.at(3)]) {
+						try {
+							int source = std::stoi(tokens.at(1));
+							int destination = std::stoi(tokens.at(2));
+
+							graphs[tokens.at(3)]->bfs(source, destination);
+						} catch (std::exception e) {
+							cout << "Error. Invalid Arguments" << std::endl;
+						}
+					} else {
+						cout << "Error. Register doesn't exist" << std::endl;
+					}
+				} else {
+					cout << "Wrong amount of arguments" << std::endl;
+				}
 			}
 
 		} else {
