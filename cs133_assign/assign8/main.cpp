@@ -1,53 +1,88 @@
 #include <iostream>
 #include <boost/thread.hpp>
+#include <cstdlib>
 using std::cout;
 
+boost::thread_group threads;
+
 struct qsort_thread {
+	qsort_thread(int *d, unsigned int l, unsigned int r) {
+		data = d;
+		left = l;
+		right = r;
+	}
+
 	int* data;
 	unsigned int left, right;
 
 	void operator()() {
-	int i = left;
-	int j = right;
-	int temp;
-	int pivot = data[(i + j) / 2];
+		int i = left;
+		int j = right;
+		int temp;
+		int pivot = data[(i + j) / 2];
 
-	/* Partition */
+		/* Partition */
 
-	while (i <= j) {
-		while (data[i] < pivot)
-			i++;
-		while (data[j] > pivot)
-			j--;
-		if (i <= j) {
-			temp = data[i];
-			data[i] = data[j];
-			data[j] = temp;
-			i++;
-			j--;
+		while (i <= j) {
+			while (data[i] < pivot)
+				i++;
+			while (data[j] > pivot)
+				j--;
+			if (i <= j) {
+				temp = data[i];
+				data[i] = data[j];
+				data[j] = temp;
+				i++;
+				j--;
+			}
 		}
+		
+		/* Recursion */
+		if (right - left > 16) {
+			if (left < j)
+				threads.create_thread(qsort_thread(data, left, j));
+			if (i < right)
+				threads.create_thread(qsort_thread(data, i, right));
+		} else {
+			if (left < j)
+				qsort_thread(data, left, j);
+			if (i < right)
+				qsort_thread(data, i, right);
+		}
+		
 	}
-	
-	/* Recursion */
-	if (left < j)
-		new boost::thread {qsort_thread(data, left, j)};
-	if (i < right)
-		new boost::thread {qsort_thread(data, i, right)};
-	
-	}
-}
+};
 
 void seq_qsort(int* data, int left, int right);
-void par_qsort(int* data, int left, int size);
 
 int main() {
+	const unsigned int size = 1000000;
+	int data[size];
+	for (int i = 0; i < size; i++)
+		data[i] = rand();
 
-	int test[] = {5, 4, 3, 2, 1};
+	int test[] = {5, 6, 3, 8, 1};
+	int test1[] = {5,4,3,2,1};
 
-	seq_qsort(test, 0, 5);
+	seq_qsort(test, 0, 4);
+	qsort_thread t(test1, 0, 4);
+	t();
+	
 
 	for (int e: test)
 		cout << e << ", ";
+
+	cout << std::endl;
+	
+	for (int e: test1)
+		cout << e << ", ";
+
+	cout << std::endl << "Algorithms are implemented properly!" << std::endl;
+
+	seq_qsort(data, 0, size - 1);
+	qsort_thread(data, 0, size - 1);
+
+	
 
 	return 0;
 }
@@ -79,8 +114,4 @@ void seq_qsort(int *data, int left, int right) {
 		seq_qsort(data, left, j);
 	if (i < right)
 		seq_qsort(data, i, right);
-}
-
-
-void par_qsort(int *data, int left, int right) {
 }
