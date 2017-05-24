@@ -1,8 +1,21 @@
+/*
+	main.cpp
+	The Quicksort Algorithms run here on test arrays
+
+	Julio Sandino
+	May 24, 2017
+
+	This Program test a quicksort sorting function using only recursion, and one
+	quicksort using multithreaded programming. They both sort a one million long
+	array with random entries.
+*/
+
 #include <iostream>
 #include <boost/thread.hpp>
 #include <cstdlib>
 using std::cout;
 
+//Initiating threads to be used in the multithreaded quicksort
 boost::thread_group threads;
 
 struct qsort_thread {
