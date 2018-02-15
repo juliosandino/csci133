@@ -20,6 +20,7 @@
   I'd have til 11:59 pm to submit the work, but boy was I wrong.
   The program uses functionality from c++11 to check if a string is all numbers
   so in order for it to compile use g++ std=c++11...
+  LMAO I just added this
 */
 
 #include <sstream>
